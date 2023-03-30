@@ -120,20 +120,20 @@ class HomeScreen extends StatelessWidget {
                         navigatorKey.currentState?.push(
                             MaterialPageRoute(builder: (_) => Products()));
                       } else if (index == 1) {
-                        navigatorKey.currentState?.push(
-                            MaterialPageRoute(builder: (_) => Quotation()));
+                        navigatorKey.currentState?.push(MaterialPageRoute(
+                            builder: (_) => const Quotation()));
                       } else if (index == 2) {
                         navigatorKey.currentState?.push(
                             MaterialPageRoute(builder: (_) => Customers()));
                       } else if (index == 3) {
-                        navigatorKey.currentState?.push(
-                            MaterialPageRoute(builder: (_) => SalesInvoice()));
+                        navigatorKey.currentState?.push(MaterialPageRoute(
+                            builder: (_) => const SalesInvoice()));
                       } else if (index == 4) {
-                        navigatorKey.currentState
-                            ?.push(MaterialPageRoute(builder: (_) => Report()));
-                      } else if (index == 5) {
                         navigatorKey.currentState?.push(
-                            MaterialPageRoute(builder: (_) => Settings()));
+                            MaterialPageRoute(builder: (_) => const Report()));
+                      } else if (index == 5) {
+                        navigatorKey.currentState?.push(MaterialPageRoute(
+                            builder: (_) => const Settings()));
                       }
                       //else if (index == 3) {
                       //   navigatorKey.currentState
@@ -213,7 +213,7 @@ class HomeScreen extends StatelessWidget {
                             foregroundColor: Colors.black,
                           ),
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'No',
                           ),
                         ),
@@ -223,7 +223,7 @@ class HomeScreen extends StatelessWidget {
                               // Navigator.of(context).pop();
                               // SystemNavigator.pop();
                             },
-                            child: Text(
+                            child: const Text(
                               'yes',
                             ))
                       ],

@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:image/image.dart' as img;
 
 class Pdf {
   final pdf = pw.Document();
@@ -37,9 +34,9 @@ class Pdf {
         border: pw.TableBorder.all(),
         // Optional column widths
         columnWidths: {
-          0: pw.FixedColumnWidth(15),
-          1: pw.FixedColumnWidth(65),
-          2: pw.FixedColumnWidth(20),
+          0: const pw.FixedColumnWidth(15),
+          1: const pw.FixedColumnWidth(65),
+          2: const pw.FixedColumnWidth(20),
         },
       );
     }
@@ -99,9 +96,9 @@ class Pdf {
         border: pw.TableBorder.all(),
         // Optional column widths
         columnWidths: {
-          0: pw.FixedColumnWidth(15),
-          1: pw.FixedColumnWidth(65),
-          2: pw.FixedColumnWidth(20),
+          0: const pw.FixedColumnWidth(15),
+          1: const pw.FixedColumnWidth(65),
+          2: const pw.FixedColumnWidth(20),
         },
       );
     }
@@ -115,7 +112,7 @@ class Pdf {
         pw.Container(
             width: 560,
             height: 170,
-            padding: pw.EdgeInsets.all(15),
+            padding: const pw.EdgeInsets.all(15),
             color: PdfColors.black,
             child: pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -125,11 +122,11 @@ class Pdf {
                       mainAxisAlignment: pw.MainAxisAlignment.center,
                       children: [
                         pw.Text("+91 9876543210",
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                                 color: PdfColors.white, fontSize: 16)),
                         pw.SizedBox(height: 10),
                         pw.Text("abcd@gmail.com",
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                                 color: PdfColors.white, fontSize: 16))
                       ]),
                 ])),

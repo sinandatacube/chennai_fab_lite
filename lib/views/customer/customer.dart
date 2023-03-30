@@ -23,7 +23,7 @@ class Customers extends StatelessWidget {
       onPressed: () {
         addPopup(context, width);
       },
-      child: Icon(Icons.add),
+      child: const Icon(Icons.add),
     );
   }
 
@@ -53,7 +53,7 @@ class Customers extends StatelessWidget {
               "Customer Details",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -82,7 +82,7 @@ class Customers extends StatelessWidget {
                 ),
               ),
             ),
-            Divider(),
+            const Divider(),
             ListView.separated(
               controller: ScrollController(),
               padding: EdgeInsets.symmetric(

@@ -1,3 +1,4 @@
+import 'package:chennai_fab_lite/views/customer/customer.dart';
 import 'package:chennai_fab_lite/views/quotation/quotation2.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +14,12 @@ class Quotation extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appbar(width),
-      body: SafeArea(bottom: false, child: body(width, height)),
+      body: SafeArea(bottom: false, child: body(width, height, context)),
     );
   }
 
   // /\/\/\/\/\/\/\/\/\/\/\/\/  body
-  Widget body(double width, double height) {
+  Widget body(double width, double height, BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -91,6 +92,10 @@ class Quotation extends StatelessWidget {
                             width: width * 0.58,
                             // height: 40,
                             child: TextField(
+                              readOnly: true,
+                              onTap: () {
+                                namePopup(context, width);
+                              },
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16,
@@ -119,7 +124,9 @@ class Quotation extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Customers().addPopup(context, width);
+                            },
                             icon: const Icon(Icons.add),
                           )
                         ],
@@ -163,7 +170,57 @@ class Quotation extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            billingTile2(width, "Date  "),
+            // /\/\/\/\/\/\//\\// select date
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width * 0.025),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Date",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Colors.black87),
+                  ),
+                  SizedBox(
+                    width: width * 0.65,
+                    // height: 40,
+                    child: TextField(
+                      readOnly: true,
+                      onTap: () {
+                        selectDate(context);
+                      },
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: Colors.black87),
+                      // controller: usernameCtrl,
+                      // keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(8),
+                        isDense: true,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: BorderSide(color: Colors.grey.shade500),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide:
+                                BorderSide(color: UtilControllers().mainColor)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide:
+                                BorderSide(color: Colors.grey.shade500)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // billingTile2(width, "Date  "),
             const SizedBox(
               height: 15,
             ),
@@ -221,6 +278,7 @@ class Quotation extends StatelessWidget {
           width: width * 0.7,
           // height: 40,
           child: TextField(
+            readOnly: true,
             style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 16,
@@ -294,5 +352,74 @@ class Quotation extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // /\/\/\/\/\/\/\/\\/\/\/\/\/\/\/ select customer popup
+  namePopup(BuildContext context, double width) {
+    return showModalBottomSheet(
+        isDismissible: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            // height: 300,
+            width: width,
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
+                  child: Text(
+                    "Select Customer",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const Divider(),
+                ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.02, vertical: 10),
+                    shrinkWrap: true,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.02,
+                        ),
+                        height: 50,
+                        width: width,
+                        color: index % 2 == 0
+                            ? Colors.grey.shade300
+                            : Colors.white,
+                        child: const Text("Name of Customer"),
+                      );
+                    }),
+              ],
+            ),
+          );
+        });
+  }
+
+  // /\/\/\/\/\/\\\/\//\ select date
+
+  Future<DateTime?> selectDate(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != selectedDate) {
+      return picked;
+    } else {
+      return selectedDate;
+    }
   }
 }

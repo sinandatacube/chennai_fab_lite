@@ -1,3 +1,4 @@
+import 'package:chennai_fab_lite/controllers/util_controllers.dart';
 import 'package:chennai_fab_lite/views/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         title: 'Chennai fab',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: UtilControllers.mainColors,
         ),
         home: LoginScreen());
   }

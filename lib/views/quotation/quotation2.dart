@@ -184,21 +184,21 @@ class QuotationAddItems extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: Checkbox(value: false, onChanged: (val) {})),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text(
-                          "Print without image",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     SizedBox(
+                    //         width: 18,
+                    //         height: 18,
+                    //         child: Checkbox(value: false, onChanged: (val) {})),
+                    //     const SizedBox(
+                    //       width: 5,
+                    //     ),
+                    //     const Text(
+                    //       "Print without image",
+                    //       style: TextStyle(fontSize: 12),
+                    //     ),
+                    //   ],
+                    // ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: UtilControllers().mainColor),
@@ -323,9 +323,7 @@ class QuotationAddItems extends StatelessWidget {
                             horizontal: width * 0.02, vertical: width * 0.02),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: index % 2 == 0
-                                ? Colors.white
-                                : Colors.grey.shade200,
+                            color: Colors.white,
                             border: Border.all(color: Colors.grey.shade400)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -333,29 +331,29 @@ class QuotationAddItems extends StatelessWidget {
                             productCardTile(
                                 "Product Name ", current['productname']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile("code ", current['code']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile(
                                 "Sq.ft per windows", current['sqftperwindow']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile(
                                 "value per sqft", current['valuepersqft']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile("Unit price", current['price']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile("quantity", current['qty']),
                             const SizedBox(
-                              height: 4,
+                              height: 6,
                             ),
                             productCardTile("Amount", current['amount']),
                           ],
@@ -448,7 +446,7 @@ class QuotationAddItems extends StatelessWidget {
   Widget productCardTile(String title, txt2) {
     return Row(
       children: [
-        Expanded(flex: 2, child: Text(title)),
+        Expanded(flex: 3, child: Text(title)),
         Expanded(flex: 5, child: Text(": " + txt2)),
       ],
     );
@@ -939,7 +937,9 @@ class QuotationAddItems extends StatelessWidget {
                                 ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red.shade400),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navigatorKey.currentState?.pop();
+                                    },
                                     child: const Text("Cancel")),
                               ],
                             )

@@ -10,19 +10,19 @@ class Products extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButton: FloatButton(width, context),
+      floatingActionButton: floatButton(width, context),
       appBar: appbar(),
       body: body(width, height),
     );
   }
 
-  FloatingActionButton FloatButton(double width, BuildContext context) {
+  FloatingActionButton floatButton(double width, BuildContext context) {
     return FloatingActionButton.extended(
         backgroundColor: UtilControllers().mainColor,
         onPressed: () {
           addProduct(context, width);
         },
-        label: Text("Add Product"));
+        label: const Text("Add Product"));
   }
 
   Widget body(double width, double height) {
@@ -55,7 +55,7 @@ class Products extends StatelessWidget {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           ListView.separated(
             controller: ScrollController(),
             padding: EdgeInsets.symmetric(

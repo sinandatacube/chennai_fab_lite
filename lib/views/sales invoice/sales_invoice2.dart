@@ -41,7 +41,7 @@ class SalesInvoice2 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+              const  Text(
                   "Products",
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
@@ -49,7 +49,7 @@ class SalesInvoice2 extends StatelessWidget {
                     onPressed: () {
                       addPopup(context, width);
                     },
-                    child: Text("Add Products"))
+                    child:const Text("Add Products"))
               ],
             ),
             ListView.separated(
@@ -300,7 +300,7 @@ class SalesInvoice2 extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: UtilControllers().mainColor),
                   onPressed: () {},
-                  child: Text("Save")),
+                  child:const Text("Save")),
             )
           ],
         ),
