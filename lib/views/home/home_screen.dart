@@ -120,8 +120,8 @@ class HomeScreen extends StatelessWidget {
                         navigatorKey.currentState?.push(
                             MaterialPageRoute(builder: (_) => Products()));
                       } else if (index == 1) {
-                        navigatorKey.currentState?.push(MaterialPageRoute(
-                            builder: (_) => const Quotation()));
+                        navigatorKey.currentState?.push(
+                            MaterialPageRoute(builder: (_) => Quotation()));
                       } else if (index == 2) {
                         navigatorKey.currentState?.push(
                             MaterialPageRoute(builder: (_) => Customers()));

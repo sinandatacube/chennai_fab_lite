@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/settings_controller.dart';
 import '../../controllers/util_controllers.dart';
 
 class Settings extends StatelessWidget {
@@ -31,142 +30,49 @@ class Settings extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Consumer<SettingsController>(builder: (context, value, child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Container(
+            width: width,
+            margin:
+                EdgeInsets.symmetric(horizontal: width * 0.02, vertical: 10),
+            padding:
+                EdgeInsets.symmetric(horizontal: width * 0.02, vertical: 10),
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.grey.shade400)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () => {context.read<SettingsController>().updateTab()},
-                  child: Container(
-                    width: width * 0.5,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: value.showChangePassword
-                              ? Colors.black12
-                              : Colors.white,
-                        ),
-                        color: value.showChangePassword
-                            ? Colors.grey.shade400
-                            : Colors.transparent),
-                    height: 65,
-                    child: const Text("Update Details"),
-                  ),
+                const Text(
+                  "Organization Details",
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                GestureDetector(
-                  onTap: () => {context.read<SettingsController>().updateTab()},
-                  child: Container(
-                    width: width * 0.5,
-                    height: 65,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: value.showChangePassword
-                              ? Colors.white
-                              : Colors.black12,
-                        ),
-                        color: value.showChangePassword
-                            ? Colors.transparent
-                            : Colors.grey.shade400),
-                    child: const Text("Change Password"),
-                  ),
+                const SizedBox(
+                  height: 20,
                 ),
+                billingTile(width, "Organisation Name"),
+                const SizedBox(
+                  height: 20,
+                ),
+                billingTile(width, "Address"),
+                const SizedBox(
+                  height: 20,
+                ),
+                billingTile(width, "Mobile"),
+                const SizedBox(
+                  height: 20,
+                ),
+                billingTile(width, "Email"),
+                const SizedBox(
+                  height: 25,
+                ),
+                Center(
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: UtilControllers().mainColor),
+                        onPressed: () {},
+                        child: const Text("Update")))
               ],
-            );
-          }),
-          Divider(),
-          Consumer<SettingsController>(builder: (context, value, child) {
-            return value.showChangePassword
-                ? const SizedBox.shrink()
-                : Container(
-                    width: width,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: width * 0.02, vertical: 10),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.02, vertical: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Organization Details",
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Organisation Name"),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Address"),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Mobile"),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Email"),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Center(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        UtilControllers().mainColor),
-                                onPressed: () {},
-                                child: const Text("Update")))
-                      ],
-                    ),
-                  );
-          }),
-          Consumer<SettingsController>(builder: (context, value, child) {
-            return value.showChangePassword
-                ? Container(
-                    width: width,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: width * 0.02, vertical: 10),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.02, vertical: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Change Password",
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Enter old Password"),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "New Password"),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        billingTile(width, "Re-enter Password"),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Center(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        UtilControllers().mainColor),
-                                onPressed: () {},
-                                child: const Text("Update")))
-                      ],
-                    ),
-                  )
-                : const SizedBox.shrink();
-          })
+            ),
+          )
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 
 import '../../controllers/util_controllers.dart';
+import '../../pdf/pdf_generate.dart';
 
 class SalesInvoice2 extends StatelessWidget {
   SalesInvoice2({super.key});
@@ -12,6 +12,7 @@ class SalesInvoice2 extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      bottomNavigationBar: bottom(width, context),
       appBar: appbar(),
       body: body(width, context, height),
     );
@@ -41,7 +42,7 @@ class SalesInvoice2 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              const  Text(
+                const Text(
                   "Products",
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
@@ -49,7 +50,7 @@ class SalesInvoice2 extends StatelessWidget {
                     onPressed: () {
                       addPopup(context, width);
                     },
-                    child:const Text("Add Products"))
+                    child: const Text("Add Products"))
               ],
             ),
             ListView.separated(
@@ -244,64 +245,6 @@ class SalesInvoice2 extends StatelessWidget {
             //     ),
             //   ),
             // ),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Note"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Paid"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Balance"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "CGST Rate(%)"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "CGST Amount"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "SGST Rate(%)"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "SGST Amount"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Total Cost"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Tax(%)"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Tax Amount"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Transport \nCharge"),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Net Amount"),
-            const SizedBox(
-              height: 25,
-            ),
-            Center(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: UtilControllers().mainColor),
-                  onPressed: () {},
-                  child:const Text("Save")),
-            )
           ],
         ),
       ),
@@ -402,12 +345,8 @@ class SalesInvoice2 extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  textField("sqft per window"),
-                  const SizedBox(
-                    height: 12,
-                  ),
                   textField(
-                    "value per sqft",
+                    "Total sqft",
                   ),
                   const SizedBox(
                     height: 12,
@@ -461,6 +400,208 @@ class SalesInvoice2 extends StatelessWidget {
             borderSide: BorderSide(color: Colors.grey.shade500)),
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.black),
+      ),
+    );
+  }
+
+  Widget bottom(double width, BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      width: width,
+      height: 275,
+      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: 5),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(5)),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerRight,
+            width: width,
+            margin: const EdgeInsets.only(bottom: 17),
+            height: 15,
+            child: const Icon(
+              Icons.keyboard_arrow_down_sharp,
+              size: 35,
+            ),
+          ),
+          Container(
+            // margin: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.grey.shade400)),
+            child: Column(
+              children: [
+                billingTile2(
+                  width,
+                  "Total cost",
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.025),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        flex: 4,
+                        child: Center(
+                          child: Text(
+                            "Tax %",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                                color: Colors.black87),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 4,
+                        // width: width * 0.65,
+                        // height: 40,
+                        child: Center(
+                          child: TextField(
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Colors.black87),
+                            // controller: usernameCtrl,
+                            // keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(8),
+                              isDense: true,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade500),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                      color: UtilControllers().mainColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade500)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 0,
+                      ),
+                      const Expanded(
+                          flex: 3,
+                          child: Center(
+                            child: Text(
+                              "Tax \nAmount",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          )),
+                      const SizedBox(
+                        width: 0,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        // width: width * 0.65,
+                        // height: 40,
+                        child: Center(
+                          child: TextField(
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Colors.black87),
+                            // controller: usernameCtrl,
+                            // keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(8),
+                              isDense: true,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade500),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                      color: UtilControllers().mainColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade500)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                billingTile2(
+                  width,
+                  "Other charges",
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                billingTile2(
+                  width,
+                  "Net Amount",
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: Checkbox(value: false, onChanged: (val) {})),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          "Print without image",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: UtilControllers().mainColor),
+                        onPressed: () async {
+                          String filePath = await Pdf().createPdf(
+                              "custName",
+                              "sub",
+                              "total",
+                              "discount",
+                              "date",
+                              "orderId",
+                              width);
+                          // navigatorKey.currentState?.push(
+                          //     MaterialPageRoute(builder: (_) => HomeScreen()));
+                          await OpenFile.open(filePath);
+                        },
+                        child: const Text("Save"))
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

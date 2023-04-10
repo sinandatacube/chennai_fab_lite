@@ -1,12 +1,30 @@
 import 'package:chennai_fab_lite/views/customer/customer.dart';
 import 'package:chennai_fab_lite/views/quotation/quotation2.dart';
+import 'package:chennai_fab_lite/views/widget%20custom/select_date.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/quotation_controller.dart';
 import '../../controllers/util_controllers.dart';
 import '../../main.dart';
+import '../widget custom/popup_name.dart';
 
-class Quotation extends StatelessWidget {
-  const Quotation({super.key});
+class Quotation extends StatefulWidget {
+  Quotation({super.key});
+
+  @override
+  State<Quotation> createState() => _QuotationState();
+}
+
+class _QuotationState extends State<Quotation> {
+  final TextEditingController dateCtrl = TextEditingController();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<QuotationController>().initSelectedDate();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +103,7 @@ class Quotation extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Name"),
+                      const Text("Customer"),
                       Row(
                         children: [
                           SizedBox(
@@ -94,7 +112,7 @@ class Quotation extends StatelessWidget {
                             child: TextField(
                               readOnly: true,
                               onTap: () {
-                                namePopup(context, width);
+                                PopupCustomerName().namePopup(context, width);
                               },
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400,
@@ -136,98 +154,74 @@ class Quotation extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  billingTile(width, "Address"),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // billingTile(width, "GST no     :"),
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  billingTile(width, "Mobile"),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  billingTile(width, "Email "),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            billingTile2(width, "Measured By"),
-            const SizedBox(
-              height: 15,
-            ),
-            billingTile2(width, "Ref  "),
-            const SizedBox(
-              height: 15,
-            ),
-            billingTile2(width, "Prepared by  "),
-            const SizedBox(
-              height: 15,
-            ),
-            // /\/\/\/\/\/\//\\// select date
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.025),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Date",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                        color: Colors.black87),
-                  ),
-                  SizedBox(
-                    width: width * 0.65,
-                    // height: 40,
-                    child: TextField(
-                      readOnly: true,
-                      onTap: () {
-                        selectDate(context);
-                      },
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: Colors.black87),
-                      // controller: usernameCtrl,
-                      // keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(8),
-                        isDense: true,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide(color: Colors.grey.shade500),
+                  // /\/\/\/\/\/\//\\// select date
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.025),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Date",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                              color: Colors.black87),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide:
-                                BorderSide(color: UtilControllers().mainColor)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade500)),
-                      ),
+                        Consumer<QuotationController>(
+                            builder: (context, value, child) {
+                          return SizedBox(
+                            width: width * 0.66,
+                            // height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: TextEditingController(
+                                  text: value.selectedDate == null
+                                      ? "Select Date"
+                                      : '${value.selectedDate!.day} - ${value.selectedDate!.month} - ${value.selectedDate!.year}'),
+                              readOnly: true,
+                              onTap: () {
+                                SelectDate().selectDate(context);
+                              },
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  color: Colors.black87),
+                              // controller: usernameCtrl,
+                              // keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(8),
+                                isDense: true,
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade500),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                        color: UtilControllers().mainColor)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey.shade500)),
+                              ),
+                            ),
+                          );
+                        }),
+                      ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                 ],
               ),
             ),
-            // billingTile2(width, "Date  "),
             const SizedBox(
               height: 15,
             ),
-            // billingTile2(width, "GST No        :"),
-            // const SizedBox(
-            //   height: 15,
-            // ),
             SizedBox(
               width: width * 0.4,
               child: ElevatedButton(
@@ -305,121 +299,5 @@ class Quotation extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  // /\/\/\/\/\/\/\/\/\/\/\/\/    billingTile2
-  Widget billingTile2(double width, String title) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.025),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            width: width * 0.65,
-            // height: 40,
-            child: TextField(
-              style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                  color: Colors.black87),
-              // controller: usernameCtrl,
-              // keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(8),
-                isDense: true,
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide(color: Colors.grey.shade500),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: UtilControllers().mainColor)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                    borderSide: BorderSide(color: Colors.grey.shade500)),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // /\/\/\/\/\/\/\/\\/\/\/\/\/\/\/ select customer popup
-  namePopup(BuildContext context, double width) {
-    return showModalBottomSheet(
-        isDismissible: true,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return Container(
-            // height: 300,
-            width: width,
-            color: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 5,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
-                  child: Text(
-                    "Select Customer",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const Divider(),
-                ListView.builder(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.02, vertical: 10),
-                    shrinkWrap: true,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: width * 0.02,
-                        ),
-                        height: 50,
-                        width: width,
-                        color: index % 2 == 0
-                            ? Colors.grey.shade300
-                            : Colors.white,
-                        child: const Text("Name of Customer"),
-                      );
-                    }),
-              ],
-            ),
-          );
-        });
-  }
-
-  // /\/\/\/\/\/\\\/\//\ select date
-
-  Future<DateTime?> selectDate(BuildContext context) async {
-    DateTime selectedDate = DateTime.now();
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != selectedDate) {
-      return picked;
-    } else {
-      return selectedDate;
-    }
   }
 }

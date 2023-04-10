@@ -1,8 +1,14 @@
+import 'package:chennai_fab_lite/views/quotation/quotation.dart';
 import 'package:chennai_fab_lite/views/sales%20invoice/sales_invoice2.dart';
+import 'package:chennai_fab_lite/views/widget%20custom/select_date.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/quotation_controller.dart';
 import '../../controllers/util_controllers.dart';
 import '../../main.dart';
+import '../customer/customer.dart';
+import '../widget custom/popup_name.dart';
 
 class SalesInvoice extends StatelessWidget {
   const SalesInvoice({super.key});
@@ -13,12 +19,12 @@ class SalesInvoice extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appbar(),
-      body: body(width),
+      body: body(width, context),
     );
   }
 
   // /\/\/\/\/\/\/\/\/\/\/\/\/  body
-  Widget body(double width) {
+  Widget body(double width, BuildContext context) {
     return SingleChildScrollView(
         child: Container(
       width: width,
@@ -97,49 +103,126 @@ class SalesInvoice extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w500, color: Colors.black87),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Customer"),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width * 0.5,
+                          // height: 40,
+                          child: TextField(
+                            readOnly: true,
+                            onTap: () {
+                              PopupCustomerName().namePopup(context, width);
+                            },
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                                color: Colors.black87),
+                            // controller: usernameCtrl,
+                            // keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(8),
+                              isDense: true,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade500),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                      color: UtilControllers().mainColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade500)),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Customers().addPopup(context, width);
+                          },
+                          icon: const Icon(Icons.add),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 15,
                 ),
-                billingTile2(width, "Name"),
+                // /\/\/\/\/\/\//\\// select date
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.025),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Date",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: Colors.black87),
+                      ),
+                      Consumer<QuotationController>(
+                          builder: (context, value, child) {
+                        return SizedBox(
+                          width: width * 0.59,
+                          // height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: TextEditingController(
+                                text: value.selectedDate == null
+                                    ? "Select Date"
+                                    : '${value.selectedDate!.day} - ${value.selectedDate!.month} - ${value.selectedDate!.year}'),
+                            readOnly: true,
+                            onTap: () {
+                              SelectDate().selectDate(context);
+                            },
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Colors.black87),
+                            // controller: usernameCtrl,
+                            // keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(8),
+                              isDense: true,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
+                                borderSide:
+                                    BorderSide(color: Colors.grey.shade500),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: BorderSide(
+                                      color: UtilControllers().mainColor)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide:
+                                      BorderSide(color: Colors.grey.shade500)),
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
-                billingTile2(width, "Address"),
-                const SizedBox(
-                  height: 15,
-                ),
-                billingTile2(width, "Mobile"),
-                const SizedBox(
-                  height: 15,
-                ),
-                billingTile2(width, "Email"),
-                const SizedBox(
-                  height: 15,
-                ),
-                billingTile2(width, "GstNo")
+                billingTile2(width, "Ref"),
               ],
             ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          billingTile2(width, "Measured By "),
-          const SizedBox(
-            height: 15,
-          ),
-          billingTile2(width, "Ref"),
-          const SizedBox(
-            height: 15,
-          ),
-          billingTile2(width, "Prepared by"),
-          const SizedBox(
-            height: 15,
-          ),
-          billingTile2(width, "Date "),
-          const SizedBox(
-            height: 15,
-          ),
-          billingTile2(width, "GST No "),
           const SizedBox(
             height: 15,
           ),

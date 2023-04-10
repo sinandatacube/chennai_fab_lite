@@ -1,6 +1,6 @@
 import 'package:chennai_fab_lite/main.dart';
 import 'package:chennai_fab_lite/pdf/pdf_generate.dart';
-import 'package:chennai_fab_lite/views/home/home_screen.dart';
+import 'package:chennai_fab_lite/views/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 import '../../controllers/util_controllers.dart';
@@ -25,7 +25,7 @@ class QuotationAddItems extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       width: width,
-      height: 315,
+      height: 275,
       padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: 5),
       decoration: BoxDecoration(
           color: Colors.grey.shade200, borderRadius: BorderRadius.circular(5)),
@@ -63,7 +63,7 @@ class QuotationAddItems extends StatelessWidget {
                         flex: 4,
                         child: Center(
                           child: Text(
-                            "Tax amount",
+                            "Tax %",
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
@@ -76,7 +76,7 @@ class QuotationAddItems extends StatelessWidget {
                         width: 10,
                       ),
                       Expanded(
-                        flex: 5,
+                        flex: 4,
                         // width: width * 0.65,
                         // height: 40,
                         child: Center(
@@ -110,16 +110,20 @@ class QuotationAddItems extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        width: 5,
+                        width: 0,
                       ),
                       const Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Center(
                             child: Text(
-                              "Tax %",
+                              "Tax \nAmount",
+                              textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 12),
                             ),
                           )),
+                      const SizedBox(
+                        width: 0,
+                      ),
                       Expanded(
                         flex: 3,
                         // width: width * 0.65,
@@ -162,14 +166,7 @@ class QuotationAddItems extends StatelessWidget {
                 ),
                 billingTile2(
                   width,
-                  "Fitting charges",
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                billingTile2(
-                  width,
-                  "Transport charge",
+                  "Other charges",
                 ),
                 const SizedBox(
                   height: 8,
@@ -184,21 +181,21 @@ class QuotationAddItems extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Row(
-                    //   children: [
-                    //     SizedBox(
-                    //         width: 18,
-                    //         height: 18,
-                    //         child: Checkbox(value: false, onChanged: (val) {})),
-                    //     const SizedBox(
-                    //       width: 5,
-                    //     ),
-                    //     const Text(
-                    //       "Print without image",
-                    //       style: TextStyle(fontSize: 12),
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      children: [
+                        SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: Checkbox(value: false, onChanged: (val) {})),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          "Print without image",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: UtilControllers().mainColor),
@@ -235,7 +232,10 @@ class QuotationAddItems extends StatelessWidget {
       backgroundColor: UtilControllers().mainColor,
       label: const Text("Add item"),
       onPressed: () {
-        addProduct(context, width, height);
+        Products().addProduct(
+          context,
+          width,
+        );
       },
     );
   }
@@ -369,74 +369,6 @@ class QuotationAddItems extends StatelessWidget {
                     ],
                   );
                 })
-
-            // SingleChildScrollView(
-            //   scrollDirection: Axis.horizontal,
-            //   child: DataTable(
-            //     dataRowHeight: 40,
-            //     headingRowHeight: 50,
-            //     columns: const [
-            //       DataColumn(
-            //           label: Text(
-            //         'Name',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'code',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'Sqft per windows',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'value per sqft',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'Unit price',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'Quantity',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'Amount',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //       DataColumn(
-            //           label: Text(
-            //         'Delete',
-            //         style: TextStyle(fontWeight: FontWeight.w600),
-            //       )),
-            //     ],
-            //     rows: [
-            //       for (int i = 0; i < data.length; i++)
-            //         DataRow(cells: [
-            //           DataCell(Text(data[i]['productname'])),
-            //           DataCell(Text(data[i]['code'])),
-            //           DataCell(Text(data[i]['sqftperwindow'])),
-            //           DataCell(Text(data[i]['valuepersqft'])),
-            //           DataCell(Text(data[i]['price'])),
-            //           DataCell(Text(data[i]['qty'])),
-            //           DataCell(Text(data[i]['amount'])),
-            //           DataCell(Icon(
-            //             Icons.close,
-            //             color: Colors.red.shade800,
-            //           )),
-            //         ]),
-
-            //       // more rows...
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),
@@ -580,7 +512,7 @@ class QuotationAddItems extends StatelessWidget {
     );
   }
 
-  // /\/\/\/\/\/\/\/\/\/\/\/\/\/
+  // /\/\/\/\/\/\/\/\/\/\/\/\/\/ add products
   addProduct(BuildContext context, double width, double height) {
     return showDialog(
         barrierDismissible: true,
@@ -625,11 +557,85 @@ class QuotationAddItems extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(" Details"),
+                                  // const Text(" Details"),
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  billingTile2(width, "Name"),
+
+                                  // customer
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Expanded(
+                                          flex: 2,
+                                          child:
+                                              Center(child: Text("Product"))),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: width * 0.43,
+                                              // height: 40,
+                                              child: TextField(
+                                                readOnly: true,
+                                                onTap: () {
+                                                  selectProductPopup(
+                                                      context, width);
+                                                },
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 16,
+                                                    color: Colors.black87),
+                                                // controller: usernameCtrl,
+                                                // keyboardType: TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets.all(8),
+                                                  isDense: true,
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    borderSide: BorderSide(
+                                                        color: Colors
+                                                            .grey.shade500),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5.0),
+                                                      borderSide: BorderSide(
+                                                          color:
+                                                              UtilControllers()
+                                                                  .mainColor)),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.0),
+                                                          borderSide: BorderSide(
+                                                              color: Colors.grey
+                                                                  .shade500)),
+                                                ),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Products()
+                                                    .addProduct(context, width);
+                                              },
+                                              icon: const Icon(Icons.add),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: 8,
                                   ),
@@ -637,207 +643,10 @@ class QuotationAddItems extends StatelessWidget {
                                   const SizedBox(
                                     height: 8,
                                   ),
-                                  // /\/\/\/\/\/\//\\  size(mm)
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            "Size(mm)    ",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Colors.black87),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 4,
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width * 0.2,
-                                              // height: 40,
-                                              child: TextField(
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    color: Colors.black87),
-                                                // controller: usernameCtrl,
-                                                // keyboardType: TextInputType.number,
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets.all(8),
-                                                  isDense: true,
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                    borderSide: BorderSide(
-                                                        color: Colors
-                                                            .grey.shade500),
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              UtilControllers()
-                                                                  .mainColor)),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.0),
-                                                          borderSide: BorderSide(
-                                                              color: Colors.grey
-                                                                  .shade500)),
-                                                ),
-                                              ),
-                                            ),
-                                            const Text(
-                                              "  W",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 15,
-                                                  color: Colors.black87),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            SizedBox(
-                                              width: width * 0.2,
-                                              // height: 40,
-                                              child: TextField(
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    color: Colors.black87),
-                                                // controller: usernameCtrl,
-                                                // keyboardType: TextInputType.number,
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets.all(8),
-                                                  isDense: true,
-                                                  filled: true,
-                                                  fillColor: Colors.white,
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                    borderSide: BorderSide(
-                                                        color: Colors
-                                                            .grey.shade500),
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      borderSide: BorderSide(
-                                                          color:
-                                                              UtilControllers()
-                                                                  .mainColor)),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.0),
-                                                          borderSide: BorderSide(
-                                                              color: Colors.grey
-                                                                  .shade500)),
-                                                ),
-                                              ),
-                                            ),
-                                            const Text(
-                                              "  h",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 15,
-                                                  color: Colors.black87),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  // /\/\/\/\/\/\//\\ size(mm) ends here
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Profile System"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Location"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Glass"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Colour"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Handle Colour"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                  // billingTile2(width, "Handle Type"),
-                                  // const SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Container(
-                              width: width,
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 10),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  border:
-                                      Border.all(color: Colors.grey.shade400)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text("Compound Values"),
-                                  // const SizedBox(
-                                  //   height: 15,
-                                  // ),
-                                  // billingTile(width, "Value per piece", "Rs"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  billingTile(width, "Unit Price", "Pcs"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  billingTile(width, "Quantity", "Rs"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  billingTile(width, "Amount", "Rs"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
                                   // /\/\/\/\/\/\/\/\/\ note
                                   Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: width * 0.025),
+                                        horizontal: width * 0.01),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -907,12 +716,167 @@ class QuotationAddItems extends StatelessWidget {
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  // // /\/\/\/\/\/\//\\  size(mm)
+                                  // Row(
+                                  //   mainAxisAlignment:
+                                  //       MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     const Expanded(
+                                  //       flex: 2,
+                                  //       child: Center(
+                                  //         child: Text(
+                                  //           "Size(mm)    ",
+                                  //           style: TextStyle(
+                                  //               fontWeight: FontWeight.w400,
+                                  //               fontSize: 13,
+                                  //               color: Colors.black87),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     Expanded(
+                                  //       flex: 4,
+                                  //       child: Row(
+                                  //         children: [
+                                  //           SizedBox(
+                                  //             width: width * 0.2,
+                                  //             // height: 40,
+                                  //             child: TextField(
+                                  //               style: const TextStyle(
+                                  //                   fontWeight: FontWeight.w400,
+                                  //                   fontSize: 15,
+                                  //                   color: Colors.black87),
+                                  //               // controller: usernameCtrl,
+                                  //               // keyboardType: TextInputType.number,
+                                  //               decoration: InputDecoration(
+                                  //                 contentPadding:
+                                  //                     const EdgeInsets.all(8),
+                                  //                 isDense: true,
+                                  //                 filled: true,
+                                  //                 fillColor: Colors.white,
+                                  //                 border: OutlineInputBorder(
+                                  //                   borderRadius:
+                                  //                       BorderRadius.circular(
+                                  //                           5.0),
+                                  //                   borderSide: BorderSide(
+                                  //                       color: Colors
+                                  //                           .grey.shade500),
+                                  //                 ),
+                                  //                 focusedBorder: OutlineInputBorder(
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             5.0),
+                                  //                     borderSide: BorderSide(
+                                  //                         color:
+                                  //                             UtilControllers()
+                                  //                                 .mainColor)),
+                                  //                 enabledBorder:
+                                  //                     OutlineInputBorder(
+                                  //                         borderRadius:
+                                  //                             BorderRadius
+                                  //                                 .circular(
+                                  //                                     5.0),
+                                  //                         borderSide: BorderSide(
+                                  //                             color: Colors.grey
+                                  //                                 .shade500)),
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //           const Text(
+                                  //             "  W",
+                                  //             style: TextStyle(
+                                  //                 fontWeight: FontWeight.w400,
+                                  //                 fontSize: 15,
+                                  //                 color: Colors.black87),
+                                  //           ),
+                                  //           const SizedBox(
+                                  //             width: 10,
+                                  //           ),
+                                  //           SizedBox(
+                                  //             width: width * 0.2,
+                                  //             // height: 40,
+                                  //             child: TextField(
+                                  //               style: const TextStyle(
+                                  //                   fontWeight: FontWeight.w400,
+                                  //                   fontSize: 15,
+                                  //                   color: Colors.black87),
+                                  //               // controller: usernameCtrl,
+                                  //               // keyboardType: TextInputType.number,
+                                  //               decoration: InputDecoration(
+                                  //                 contentPadding:
+                                  //                     const EdgeInsets.all(8),
+                                  //                 isDense: true,
+                                  //                 filled: true,
+                                  //                 fillColor: Colors.white,
+                                  //                 border: OutlineInputBorder(
+                                  //                   borderRadius:
+                                  //                       BorderRadius.circular(
+                                  //                           5.0),
+                                  //                   borderSide: BorderSide(
+                                  //                       color: Colors
+                                  //                           .grey.shade500),
+                                  //                 ),
+                                  //                 focusedBorder: OutlineInputBorder(
+                                  //                     borderRadius:
+                                  //                         BorderRadius.circular(
+                                  //                             5.0),
+                                  //                     borderSide: BorderSide(
+                                  //                         color:
+                                  //                             UtilControllers()
+                                  //                                 .mainColor)),
+                                  //                 enabledBorder:
+                                  //                     OutlineInputBorder(
+                                  //                         borderRadius:
+                                  //                             BorderRadius
+                                  //                                 .circular(
+                                  //                                     5.0),
+                                  //                         borderSide: BorderSide(
+                                  //                             color: Colors.grey
+                                  //                                 .shade500)),
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //           const Text(
+                                  //             "  h",
+                                  //             style: TextStyle(
+                                  //                 fontWeight: FontWeight.w400,
+                                  //                 fontSize: 15,
+                                  //                 color: Colors.black87),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     )
+                                  //   ],
+                                  // ),
+                                  // // /\/\/\/\/\/\//\\ size(mm) ends here
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  billingTile(width, "Total sqFt", "Pcs"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  billingTile(width, "Unit Price", "Rs"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  billingTile(width, "Quantity", "Pcs"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  billingTile(width, "Amount", "Rs"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                 ],
                               ),
                             ),
                             const SizedBox(
-                              height: 8,
+                              height: 25,
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -950,6 +914,57 @@ class QuotationAddItems extends StatelessWidget {
                   ),
                 ),
               ));
+        });
+  }
+
+  // /\/\/\/\/\/\/\/\\/\/\/\/\/\/\/ select product popup
+  selectProductPopup(BuildContext context, double width) {
+    return showModalBottomSheet(
+        isDismissible: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            // height: 300,
+            width: width,
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
+                  child: Text(
+                    "Select Product",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const Divider(),
+                ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.02, vertical: 10),
+                    shrinkWrap: true,
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.02,
+                        ),
+                        height: 50,
+                        width: width,
+                        color: index % 2 == 0
+                            ? Colors.grey.shade300
+                            : Colors.white,
+                        child: const Text("Name of Product"),
+                      );
+                    }),
+              ],
+            ),
+          );
         });
   }
 
